@@ -28,4 +28,4 @@ class BiLSTMAttention(nn.Module):
     def forward(self, x):
         out, _ = self.lstm(x)
         out = self.attention(out)
-        return self.fc(out).float()
+        return self.fc(out)
