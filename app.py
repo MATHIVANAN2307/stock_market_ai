@@ -85,7 +85,7 @@ st.plotly_chart(fig4, use_container_width=True)
 st.header("🤖 AI Price Prediction (BiLSTM + Attention)")
 
 X, _, scaler = prepare_data(df)
-model = BiLSTMAttention()
+model = BiLSTMAttention().to(torch.device("cpu"))
 model.load_state_dict(
     torch.load("bilstm_model.pth", map_location=torch.device("cpu"))
 )
