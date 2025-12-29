@@ -86,7 +86,9 @@ st.header("🤖 AI Price Prediction (BiLSTM + Attention)")
 
 X, _, scaler = prepare_data(df)
 model = BiLSTMAttention()
-model.load_state_dict(torch.load("bilstm_model.pth"))
+model.load_state_dict(
+    torch.load("bilstm_model.pth", map_location=torch.device("cpu"))
+)
 model.eval()
 
 last_seq = torch.tensor(X[-1:], dtype=torch.float32)
