@@ -7,8 +7,10 @@ class Attention(nn.Module):
         self.attn = nn.Linear(hidden_dim, 1)
 
     def forward(self, x):
-        weights = torch.softmax(self.attn(x), dim=1)
-        return torch.sum(weights * x, dim=1)
+        scores = self.attn(x)                    # (batch, seq_len, 1)
+        weights = torch.softmax(scores, dim=1)   # attention over time
+        context = torch.sum(weights * x, dim=1)  # (batch, hidden_dim)
+        return context
 
 class BiLSTMAttention(nn.Module):
     def __init__(self):
@@ -26,4 +28,4 @@ class BiLSTMAttention(nn.Module):
     def forward(self, x):
         out, _ = self.lstm(x)
         out = self.attention(out)
-        return self.fc(out)
+        return self.fc(out).float()
